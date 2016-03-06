@@ -21,7 +21,6 @@ window.onload = function() {
     });
 	
     socket.on('message', function (data) {
-		console.log('Got Message');
         if(data.message) {
             messages.push(data);
             var html = '';
@@ -31,7 +30,7 @@ window.onload = function() {
             }
             content.innerHTML = html;
 			content.scrollTop = content.scrollHeight;
-			console.log('Got Message');
+			console.log('html');
 
         } else {
             console.log("There is a problem:", data);
