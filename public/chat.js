@@ -21,6 +21,7 @@ window.onload = function() {
     });
 	
     socket.on('message', function (data) {
+		console.log('Got Message');
         if(data.message) {
             messages.push(data);
             var html = '';
