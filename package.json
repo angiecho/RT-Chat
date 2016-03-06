@@ -7,9 +7,9 @@
 		"npm": "2.14.12"
 	},
     "dependencies": {
-    	"socket.io": "latest",
-    	"express": "latest",
-		"mongoose": "latest"
+    	"socket.io": "1.4.5",
+    	"express": "4.13.4",
+		"mongoose": "4.4.6"
     },
     "author": "Angela"
 }
