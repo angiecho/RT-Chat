@@ -32,8 +32,6 @@ app.use(express.static(__dirname + '/public'));
 //var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 
-server.listen(port);
-
 io.sockets.on('connection', function (socket) {
 	socket.emit('message', { message: 'Please enter a name to begin chatting' });
 	/*chat.find(function(err, docs){
@@ -55,5 +53,5 @@ io.sockets.on('connection', function (socket) {
     });
 });
 
-
+server.listen(port);
 console.log("Listening on port " + port);

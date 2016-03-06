@@ -31,6 +31,8 @@ window.onload = function() {
             }
             content.innerHTML = html;
 			content.scrollTop = content.scrollHeight;
+			console.log('Got Message');
+
         } else {
             console.log("There is a problem:", data);
         }
