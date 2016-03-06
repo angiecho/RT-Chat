@@ -5,7 +5,7 @@
 	"engines": {
 		"node": "4.3.2",
 		"npm": "2.14.12"
-	}
+	},
     "dependencies": {
     	"socket.io": "latest",
     	"express": "latest",
