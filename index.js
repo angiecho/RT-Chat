@@ -1,10 +1,8 @@
-var WebSocketServer = require('websocket').Server;
-var http = require('http');
 var express = require('express');
+var http = require('http');
 var app = express();
-var port = process.env.PORT||3700;
 var mongoose = require('mongoose');
-
+var port = process.env.PORT||3700;
 
 mongoose.connect('mongodb://localhost/Chat', function(err){
 	if(err){
@@ -31,8 +29,6 @@ app.get("/", function(req, res){
 app.use(express.static(__dirname + '/public'));
 
 var server = http.createServer(app);
-server.listen(port);
-console.log("http server listening on %d", port);
 var io = require('socket.io').listen(server);
 
 
@@ -60,5 +56,6 @@ io.sockets.on('connection', function (socket) {
     });
 });
 
+server.listen(process.env.PORT||port);
 
 console.log("Listening on port " + port);
