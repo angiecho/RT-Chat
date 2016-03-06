@@ -2,7 +2,7 @@ var express = require('express');
 var http = require('http');
 var app = express();
 var mongoose = require('mongoose');
-var port = 3700;
+var port = process.env.PORT||3700;
 
 mongoose.connect('mongodb://localhost/Chat', function(err){
 	if(err){
@@ -27,8 +27,11 @@ app.get("/", function(req, res){
 });
 
 app.use(express.static(__dirname + '/public'));
+
 var server = http.createServer(app);
-var io = require('socket.io').listen(app.listen(port));
+var io = require('socket.io').listen(server);
+
+
 
 io.sockets.on('connection', function (socket) {
 	socket.emit('message', { message: 'Please enter a name to begin chatting' });
