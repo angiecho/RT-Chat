@@ -28,7 +28,7 @@ app.get("/", function(req, res){
 
 app.use(express.static(__dirname + '/public'));
 var server = http.createServer(app);
-var io = require('socket.io').listen(server);
+var io = require('socket.io').listen(app.listen(port));
 
 io.sockets.on('connection', function (socket) {
 	socket.emit('message', { message: 'Please enter a name to begin chatting' });
