@@ -34,10 +34,12 @@ var io = require('socket.io').listen(server);
 
 io.sockets.on('connection', function (socket) {
 	socket.emit('message', { message: 'Please enter a name to begin chatting' });
-	/*chat.find(function(err, docs){
+	
+	chat.find(function(err, docs){
 		socket.emit('chatlog', {chatlog: docs});
 		console.log(docs);
-	});*/
+	});
+	
 	socket.on('send', function (data) {
 		var msg = new chat(data);
 		msg.save(function(err, mymessage){
@@ -54,4 +56,5 @@ io.sockets.on('connection', function (socket) {
 });
 
 server.listen(port);
+
 console.log("Listening on port " + port);

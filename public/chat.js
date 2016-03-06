@@ -1,22 +1,27 @@
 window.onload = function() {
  
     var messages = [];
-    var socket = io.connect(window.location.hostname);
+    var socket = io.connect();
     var field = document.getElementById("field");
     var sendButton = document.getElementById("send");
     var content = document.getElementById("content");
     var name = document.getElementById("name");
  
 	socket.on('chatlog', function (docs) {
-		var html = '';
+		for (var i = docs.length-1; i >=0; i--){
+			content.innerHTML = docs;
+			
+		}
+		
+		/*var html = '';
 		for(var i=0; i<docs.length; i++) {
 			html += '<b>' + (docs[i].username ? messages[i].username : 'Server') + ': </b>';
 			html += docs[i].message + '<br />';
 			html += docs[i].created + '<br />';
 		}
-		console.log("tried displaying docs");
 		content.innerHTML = html;
 		content.scrollTop = content.scrollHeight;
+		*/
 		
     });
 	
@@ -30,8 +35,6 @@ window.onload = function() {
             }
             content.innerHTML = html;
 			content.scrollTop = content.scrollHeight;
-			console.log(html);
-
         } else {
             console.log("There is a problem:", data);
         }
