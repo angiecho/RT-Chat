@@ -28,19 +28,18 @@ app.get("/", function(req, res){
 
 app.use(express.static(__dirname + '/public'));
 
-var server = http.createServer(app);
+var server = http.createServer(app
+server.listen(port);
 var io = require('socket.io').listen(server);
 
 
 
 io.sockets.on('connection', function (socket) {
 	socket.emit('message', { message: 'Please enter a name to begin chatting' });
-
 	/*chat.find(function(err, docs){
 		socket.emit('chatlog', {chatlog: docs});
 		console.log(docs);
 	});*/
-	//Welcome message and save new messages
 	socket.on('send', function (data) {
 		var msg = new chat(data);
 		msg.save(function(err, mymessage){
@@ -56,6 +55,5 @@ io.sockets.on('connection', function (socket) {
     });
 });
 
-server.listen(process.env.PORT||port);
 
 console.log("Listening on port " + port);
