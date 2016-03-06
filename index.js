@@ -4,8 +4,9 @@ var app = express();
 var server = require('http').createServer(app);
 var mongoose = require('mongoose');
 var port = process.env.PORT||3700;
-
-mongoose.connect('mongodb://localhost/Chat', function(err){
+var mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost';
+mongoose.connect (mongoUri, function(err){
+//mongoose.connect('mongodb://localhost/Chat', function(err){
 	if(err){
 		console.log(err);
 	}
