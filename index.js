@@ -28,8 +28,7 @@ app.get("/", function(req, res){
 
 app.use(express.static(__dirname + '/public'));
 
-var server = http.createServer(app
-server.listen(port);
+var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 
 
@@ -55,5 +54,6 @@ io.sockets.on('connection', function (socket) {
     });
 });
 
+server.listen(process.env.PORT||port);
 
 console.log("Listening on port " + port);
