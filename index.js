@@ -1,4 +1,5 @@
-var express = require("express");
+var express = require('express');
+var http = require('http');
 var app = express();
 var mongoose = require('mongoose');
 var port = 3700;
@@ -19,24 +20,25 @@ var chatSchema = mongoose.Schema({
 	created: {type: Date, default: Date.now}
 });
 
-var chat = mongoose.model('Message', chatSchema);
+var chat = mongoose.model('messages', chatSchema);
  
 app.get("/", function(req, res){
     res.sendFile(__dirname + '/index.html');
 });
- 
+
 app.use(express.static(__dirname + '/public'));
-var io = require('socket.io').listen(app.listen(port));
+var server = http.createServer(app);
+var io = require('socket.io').listen(server);
 
 io.sockets.on('connection', function (socket) {
-	socket.on('old messages', function(){
-		chat.find(function(err, docs){
-			socket.emit('database', docs);
-		});
-	});
+	socket.emit('message', { message: 'Please enter a name to begin chatting' });
+
+	/*chat.find(function(err, docs){
+		socket.emit('chatlog', {chatlog: docs});
+		console.log(docs);
+	});*/
 	//Welcome message and save new messages
-    socket.emit('message', { message: 'Please enter a name to begin chatting' });
-   	socket.on('send', function (data) {
+	socket.on('send', function (data) {
 		var msg = new chat(data);
 		msg.save(function(err, mymessage){
 
@@ -45,11 +47,12 @@ io.sockets.on('connection', function (socket) {
 			}
 			else {
 				io.sockets.emit('message', data);
-				console.log('Logged: \n', mymessage);
 			}
 		});
 
     });
 });
+
+server.listen(process.env.PORT||port);
 
 console.log("Listening on port " + port);

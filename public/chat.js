@@ -7,6 +7,19 @@ window.onload = function() {
     var content = document.getElementById("content");
     var name = document.getElementById("name");
  
+	socket.on('chatlog', function (docs) {
+		var html = '';
+		for(var i=0; i<docs.length; i++) {
+			html += '<b>' + (docs[i].username ? messages[i].username : 'Server') + ': </b>';
+			html += docs[i].message + '<br />';
+			html += docs[i].created + '<br />';
+		}
+		console.log("tried displaying docs");
+		content.innerHTML = html;
+		content.scrollTop = content.scrollHeight;
+		
+    });
+	
     socket.on('message', function (data) {
         if(data.message) {
             messages.push(data);
