@@ -1,6 +1,7 @@
 var express = require('express');
 var http = require('http');
 var app = express();
+var server = require('http').createServer(app);
 var mongoose = require('mongoose');
 var port = process.env.PORT||3700;
 
@@ -28,10 +29,10 @@ app.get("/", function(req, res){
 
 app.use(express.static(__dirname + '/public'));
 
-var server = http.createServer(app);
+//var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 
-
+server.listen(port);
 
 io.sockets.on('connection', function (socket) {
 	socket.emit('message', { message: 'Please enter a name to begin chatting' });
@@ -54,6 +55,5 @@ io.sockets.on('connection', function (socket) {
     });
 });
 
-server.listen(port);
 
 console.log("Listening on port " + port);
