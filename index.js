@@ -38,7 +38,7 @@ io.sockets.on('connection', function (socket) {
 		socket.emit('chatlog', {chatlog: docs});
 		console.log(docs);
 	});*/
-	socket.on('message', function (data) {
+	socket.on('send', function (data) {
 		var msg = new chat(data);
 		msg.save(function(err, mymessage){
 
