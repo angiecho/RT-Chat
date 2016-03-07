@@ -37,8 +37,19 @@ io.sockets.on('connection', function (socket) {
 	socket.emit('message', { message: 'Please enter a name to begin chatting' });
 	
 	chat.find(function(err, docs){
-		socket.emit('chatlog', {chatlog: docs});
-		console.log(docs);
+		if(err) console.log(err);
+		else {
+			var maxlog = docs.length;
+			if (docs.length > 15)
+				maxlog = 15;
+
+			for (var i = 0; i < maxlog; i++){
+				console.log(docs[i].message, docs[i].username);
+				var logdata = {username: docs[i].username, message: docs[i].message}
+				socket.emit('message', logdata);
+			}
+			
+		}
 	});
 	
 	socket.on('send', function (data) {
