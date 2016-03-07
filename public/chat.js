@@ -14,7 +14,7 @@ window.onload = function() {
             alert("Please type your name!");	// Require username from user
         } else {
             socket.emit('send', {username: name.value, message: field.value});
-			field.value = "";
+			field.value = "";	// Clear message field
         }
     };
 	

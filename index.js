@@ -10,18 +10,18 @@ var express = require('express'),
 var port = process.env.PORT||3700,	
 	mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost';
 	
-
+// Connect to MongoDB
 mongoose.connect (mongoUri, function(err){
 	if(err){
 		console.log(err);
 	}
 	else {
-		console.log('Connected');
+		console.log('Connected to Mongo');
 	}
 	
 });
 
-// Create a schema to store data with MongoDB
+// Create a schema to store data with Mongoose
 var chatSchema = mongoose.Schema({
 	username: String,
 	message: String,
