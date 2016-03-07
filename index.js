@@ -1,12 +1,17 @@
-var express = require('express');
-var http = require('http');
-var app = express();
-var server = require('http').createServer(app);
-var mongoose = require('mongoose');
-var port = process.env.PORT||3700;
-var mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost';
+var express = require('express'),
+	http = require('http'),
+	app = express(),
+	server = require('http').createServer(app),
+	mongoose = require('mongoose');
+	
+/*  Get envorinment variables for use with cloud server (e.g Heroku)
+	or local port variables if application hosted locally
+*/
+var port = process.env.PORT||3700,	
+	mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost';
+	
+
 mongoose.connect (mongoUri, function(err){
-//mongoose.connect('mongodb://localhost/Chat', function(err){
 	if(err){
 		console.log(err);
 	}
@@ -16,6 +21,7 @@ mongoose.connect (mongoUri, function(err){
 	
 });
 
+// Create a schema to store data with MongoDB
 var chatSchema = mongoose.Schema({
 	username: String,
 	message: String,
@@ -28,23 +34,23 @@ app.get("/", function(req, res){
     res.sendFile(__dirname + '/index.html');
 });
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public')); // Connect to front-end logic
 
-//var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 
+// Execute upon connection with a client
 io.sockets.on('connection', function (socket) {
-	socket.emit('message', { message: 'Please enter a name to begin chatting' });
 	
+	// Retrieve chat logs passed through "docs"
 	chat.find(function(err, docs){
 		if(err) console.log(err);
 		else {
-			var maxlog = docs.length;
-			if (docs.length > 15)
-				maxlog = 15;
+			var maxlog = docs.length;	// Set the number of past messages to be displayed.
+			if (docs.length > 15)		// Max the number of past messages to show 14 most
+				maxlog = 15;			// recent
 
-			for (var i = 0; i < maxlog; i++){
-				console.log(docs[i].message, docs[i].username);
+			for (var i = docs.length - maxlog; i < docs.length; i++){
+				// Pass each chat log's username and message one at a time to 
 				var logdata = {username: docs[i].username, message: docs[i].message}
 				socket.emit('message', logdata);
 			}
@@ -52,15 +58,15 @@ io.sockets.on('connection', function (socket) {
 		}
 	});
 	
+	// Receive message and username from client
 	socket.on('send', function (data) {
 		var msg = new chat(data);
-		msg.save(function(err, mymessage){
-
+		msg.save(function(err){	// Save our message in our "chat" collection
 			if(err){
 				console.log(err);
 			}
 			else {
-				io.sockets.emit('message', data);
+				io.sockets.emit('message', data);	// Pass the message to client side
 			}
 		});
 
