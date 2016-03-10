@@ -3,10 +3,16 @@
 		<title>Real Time Chat</title>
 		<script src="/chat.js"></script>
 		<script src="/socket.io/socket.io.js"></script>
-		<link rel="stylesheet" href="css/index.css">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<link rel="stylesheet" href="/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="/css/style.css">		
 	</head>
 
 	<body>
+	    <script src= "/jquery/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="/js/bootstrap.min.js"></script>
 		<div id = "content"style="width: 500px; height: 300px; margin: 0 0 20px 0; border: solid 1px #999; overflow-y: scroll;"></div>
 		<div class="scrollbar" id="style-1"></div>
 		<div class="controls">
@@ -14,7 +20,7 @@
 			<input id="name" style="width:350px;"><br>
 			Message:
 			<input id="field" style="width:350px;">
-			<input id="send" type="button" value="Send">
+			<input id = "send" type="submit" class="btn btn-primary.raised.active" value="Submit">
 		</div>
 	</body>
 </html>

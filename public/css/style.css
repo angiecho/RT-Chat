@@ -1,0 +1,93 @@
+.content {
+    position: absolute;
+    left: 80px;
+    top: 150px;
+	width: 500px; 
+	height: 300px; 
+	margin: 0 0 20px 0; 
+	border: solid 1px #999; 
+	overflow-y: scroll;
+}
+
+/***********************
+  RAISED BUTTONS
+************************/
+.btn-primary.raised {
+    box-shadow: 0 3px 0 0 #007299;
+}
+.btn-primary.raised:active, .btn-primary.raised.active {
+    background: #33a6cc;
+    box-shadow: none;
+    margin-bottom: -3px;
+    margin-top: 3px;
+}
+
+/***********************
+  CUSTON BTN VALUES
+************************/
+
+.btn {
+    padding: 5px 9px;
+    border: 0 none;
+	font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+.btn:focus, .btn:active:focus, .btn.active:focus {
+    outline: 0 none;
+}
+
+.btn-primary {
+    background: #0099cc;
+    color: #ffffff;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+    background: #33a6cc;
+}
+.btn-primary:active, .btn-primary.active {
+    background: #007299;
+    box-shadow: none;
+}
+
+::-webkit-scrollbar {
+    width: 11px;
+	height: 11px;
+}
+::-webkit-scrollbar-button {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+	background: #309c9c;
+	border: 15px none #509234;
+    border-radius: 75px;
+}
+
+::-webkit-scrollbar-track:hover {
+  background: #368c96;
+}
+::-webkit-scrollbar-track:active {
+  background: #1f4147;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #60c1f0;
+  border: 99px dashed #79b8d7;
+  border-radius: 36px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #6ad2db;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #000000;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
