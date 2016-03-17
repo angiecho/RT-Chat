@@ -38,6 +38,8 @@ app.use(express.static(__dirname + '/public')); // Connect to front-end logic
 
 var io = require('socket.io').listen(server);
 
+var chatHead = 0;
+var loadten = 10;
 // Execute upon connection with a client
 io.sockets.on('connection', function (socket) {
 	
@@ -45,28 +47,41 @@ io.sockets.on('connection', function (socket) {
 	chat.find(function(err, docs){
 		if(err) console.log(err);
 		else {
-			var maxlog = docs.length;	// Set the number of past messages to be displayed.
-			if (docs.length > 15)		// Max the number of past messages to show 14 most
-				maxlog = 15;			// recent
-
-			for (var i = docs.length - maxlog; i < docs.length; i++){
-				// Pass each chat log's username and message one at a time to 
-				var logdata = {username: docs[i].username, message: docs[i].message}
-				socket.emit('message', logdata);
-			}
-			
+			chatHead = docs.length;
 		}
 	});
 	
+	//Load 10 previous messages in history by most recent
+	socket.on('load', function (data) {
+		chat.find(function(err, docs){
+			if(err) console.log(err);
+			else {
+				if (chatHead > 0){
+					var chatTail = chatHead;
+					chatHead = chatHead - loadten;
+					if (chatHead < 0 ) 
+						chatHead = 0;
+					for (var i = chatTail - 1; i >= chatHead; i--){
+						// Pass each chat log's username and message one at a time to 
+						var logdata = {username: docs[i].username, message: docs[i].message}
+						socket.emit('oldmessage', logdata);
+					}
+				}
+			}
+		});
+	});
+	
+	
 	// Receive message and username from client
 	socket.on('send', function (data) {
+		
 		var msg = new chat(data);
 		msg.save(function(err){	// Save our message in our "chat" collection
 			if(err){
 				console.log(err);
 			}
 			else {
-				io.sockets.emit('message', data);	// Pass the message to client side
+				io.sockets.emit('newmessage', data);	// Pass the message to client side
 			}
 		});
 

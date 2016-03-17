@@ -1,10 +1,13 @@
 window.onload = function() {
  
-    var messages = [];	// Stack to store all messages to be shown in chat window
-    var socket = io.connect();
+    var newmessages = [];	// Stack to store all messages to be shown in chat window
+	var oldmessages = [];
+	var html = '';
+	var socket = io.connect();
     var field = document.getElementById("field");	// Get message field
     var name = document.getElementById("name");		// Get name field
 	var sendButton = document.getElementById("send"); 
+	var loadButton = document.getElementById("load");
     var content = document.getElementById("content");
  
  	// Execute on click of send button.
@@ -18,15 +21,36 @@ window.onload = function() {
         }
     };
 	
+	loadButton.onclick = function() {
+		socket.emit('load');
+
+    };
+	
 	// Receive messages to be shown in chat window
-    socket.on('message', function (data) {
+    socket.on('oldmessage', function (data) {
         if(data.message) {
-            messages.push(data);	// Push messages onto stack 
-            var html = '';			// Convert message data to html
-            for(var i=0; i<messages.length; i++) {
-                html += '<b>' + (messages[i].username ? messages[i].username : 'Server') + ': </b>';
-                html += messages[i].message + '<br />';
-            }
+			var temp = '';
+			temp += '<b>' + (data.username ? data.username : 'Server') + ': </b>';
+			temp += data.message + '<br />';
+			html = temp + html;
+            content.innerHTML = html;	// Pass html to content div
+			content.scrollTop = content.scrollHeight;	// Enable window scrolling
+        } else {
+            console.log("There is a problem:", data);
+        }
+    });
+	
+	// Receive messages to be shown in chat window
+    socket.on('newmessage', function (data) {
+        if(data.message) {
+            //newmessages.push(data);	// Push messages onto stack 
+            var temp = '';			// Convert message data to html
+            //for(var i=0; i<newmessages.length; i++) {
+            temp += '<b>' + (data.username ? data.username : 'Server') + ': </b>';
+            temp += data.message + '<br />';
+			html = html + temp;
+				
+            //}
             content.innerHTML = html;	// Pass html to content div
 			content.scrollTop = content.scrollHeight;	// Enable window scrolling
         } else {
