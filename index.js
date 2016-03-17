@@ -44,8 +44,6 @@ var github = new Github({
 	apiUrl: "https://api.github.com"
 });
 
-var chatHead = 0;
-var loadten = 10;
 // Execute upon connection with a client
 io.sockets.on('connection', function (socket) {
 	
@@ -58,6 +56,9 @@ io.sockets.on('connection', function (socket) {
 	});
 	
 	//Load 10 previous messages in history by most recent
+	//chatHead tracks of the top/head of the history shown
+	var chatHead = 0;
+	var loadten = 10;
 	socket.on('load', function (data) {
 		chat.find(function(err, docs){
 			if(err) console.log(err);
@@ -97,13 +98,16 @@ io.sockets.on('connection', function (socket) {
 
     });
 	
-	var maxresult = 5;
+	//Show first 5 results from "/github" <arg> command or total_count size if less than 5
+	var maxresult = 5;	
 	socket.on('searchgithub', function (data) {
 		var command = "/github " + data;
 		var result = "";
 		socket.emit('commandresult',{command:command, result: result});
-		var search = github.getSearch(data + "+in%3Aname%2Cdescription%2Creadme&order=desc");
+		var search = github.getSearch(data + "+in%3Aname%2Cdescription%2Creadme&sort=updated&order=desc");
 		search.repositories(null, function (err, repositories) {
+			if (repositories.total_count < maxresult)
+				maxresult = repositories.total_count;
 			for (var i = 0; i < maxresult; i++){
 				result = repositories.items[i];
 				socket.emit('commandresult',{command:command, result: result});
