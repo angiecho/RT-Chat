@@ -97,14 +97,18 @@ io.sockets.on('connection', function (socket) {
 
     });
 	
+	var maxresult = 5;
 	socket.on('searchgithub', function (data) {
 		var command = "/github " + data;
-		var result = "No result";
+		var result = "";
+		socket.emit('commandresult',{command:command, result: result});
 		var search = github.getSearch(data + "+in%3Aname%2Cdescription%2Creadme&order=desc");
 		search.repositories(null, function (err, repositories) {
-			//result = repositories.id;
-			console.log(repositories);
-			socket.emit('commandresult',{command:command, result: repositories});
+			for (var i = 0; i < maxresult; i++){
+				result = repositories.items[i];
+				socket.emit('commandresult',{command:command, result: result});
+			}
+			
 		});
 	});
 });

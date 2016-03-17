@@ -66,21 +66,18 @@ window.onload = function() {
 	
 	socket.on('commandresult', function (data) {
 		console.log(data.result);
-		var htmlurl = data.result.items[0].html_url;
-		var fullname = data.result.items[0].full_name;
-        if(data.command) {
-            var temp = '';			// Convert message data to html
-            temp += '<b><i>' + data.command + '</i></b><br />';
-			
-			temp += htmlurl + "-" + fullname + '<br />';
-			
-			html = html + temp;
-            content.innerHTML = html;	// Pass html to content div
-			content.scrollTop = content.scrollHeight;	// Enable window scrolling
-			
-        } else {
-            console.log("There is a problem:", data);
+		var htmlurl = data.result.html_url;
+		var fullname = data.result.full_name;
+		var temp = '';
+
+        if(data.result == "")
+			temp += '<b><i>' + data.command + '</i></b><br />';	
+		else{
+			temp += '<i>' + fullname + ":   " + "<u>" + htmlurl + '</u></i><br />';		
         }
+		html = html + temp;
+        content.innerHTML = html;	// Pass html to content div
+		content.scrollTop = content.scrollHeight;	// Enable window scrolling
     });
 	
 	
