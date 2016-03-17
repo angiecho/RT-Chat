@@ -1,6 +1,7 @@
 var express = require('express'),
 	http = require('http'),
 	URL = require('url'),
+	Github = require('github-api'),
 	app = express(),
 	server = require('http').createServer(app),
 	mongoose = require('mongoose');
@@ -38,6 +39,10 @@ app.get("/", function(req, res){
 app.use(express.static(__dirname + '/public')); // Connect to front-end logic
 
 var io = require('socket.io').listen(server);
+
+var github = new Github({
+	apiUrl: "https://api.github.com"
+});
 
 var chatHead = 0;
 var loadten = 10;
@@ -95,7 +100,12 @@ io.sockets.on('connection', function (socket) {
 	socket.on('searchgithub', function (data) {
 		var command = "/github " + data;
 		var result = "No result";
-		socket.emit('commandresult',{message:command, result: result});
+		var search = github.getSearch(data + "+in%3Aname%2Cdescription%2Creadme&order=desc");
+		search.repositories(null, function (err, repositories) {
+			//result = repositories.id;
+			console.log(repositories);
+			socket.emit('commandresult',{command:command, result: repositories});
+		});
 	});
 });
 
