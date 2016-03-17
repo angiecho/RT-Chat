@@ -11,12 +11,24 @@ window.onload = function() {
  	// Execute on click of send button.
 	// Client sends user's new message to server-side.
     sendButton.onclick = sendMessage = function() {
-        if(name.value == "") {
-            alert("Please type your name!");	// Require username from user
-        } else {
-            socket.emit('send', {username: name.value, message: field.value});
-			field.value = "";	// Clear message field
-        }
+		var user = name.value;
+		var input = field.value;
+		
+		if (input[0] == "/" && input.length > 1){
+			var cmd = input.match(/[a-z]+\b/)[0];
+			var arg = input.substr(cmd.length+2, input.length);
+			field.value = "";
+			command(cmd, arg);
+		}
+		
+        else {
+			if(user == "") {
+				alert("Please submit a username to send a message or enter a command into the message field.");	// Require username from user
+			} else {
+					socket.emit('send', {username: user, message: input});
+					field.value = "";	// Clear message field
+			}
+		}	
     };
 	
 	loadButton.onclick = function() {
@@ -33,10 +45,8 @@ window.onload = function() {
             content.innerHTML = html;	// Pass html to content div
 			content.scrollTop = content.scrollHeight;	// Enable window scrolling
         } 
-		
 		else {
             alert("No more messages in history!");
-			//console.log (data.message);
         }
     });
 	
@@ -54,8 +64,33 @@ window.onload = function() {
         }
     });
 	
-
- 
+	socket.on('commandresult', function (data) {
+        if(data.message) {
+            var temp = '';			// Convert message data to html
+            temp += '<b><i>' + data.message + '</i></b><br />';
+			
+			temp += data.result + '<br />';
+			
+			html = html + temp;
+            content.innerHTML = html;	// Pass html to content div
+			content.scrollTop = content.scrollHeight;	// Enable window scrolling
+        } else {
+            console.log("There is a problem:", data);
+        }
+    });
+	
+	
+	function command(cmd, arg) {
+		switch (cmd) {
+			case 'github':
+				socket.emit('searchgithub', arg);
+				break;
+	 
+			default:
+				alert("That is not a valid command.");
+	 
+		}
+	}
 }
 
 // On key down of "enter" (keyCode 13) execute sendMessage function
@@ -64,3 +99,4 @@ document.onkeydown = function(evt) {
 		sendMessage(); 
 	}
 }
+

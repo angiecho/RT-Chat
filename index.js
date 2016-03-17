@@ -1,5 +1,6 @@
 var express = require('express'),
 	http = require('http'),
+	URL = require('url'),
 	app = express(),
 	server = require('http').createServer(app),
 	mongoose = require('mongoose');
@@ -90,6 +91,12 @@ io.sockets.on('connection', function (socket) {
 		});
 
     });
+	
+	socket.on('searchgithub', function (data) {
+		var command = "/github " + data;
+		var result = "No result";
+		socket.emit('commandresult',{message:command, result: result});
+	});
 });
 
 server.listen(port);
