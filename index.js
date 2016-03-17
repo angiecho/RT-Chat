@@ -67,6 +67,10 @@ io.sockets.on('connection', function (socket) {
 						socket.emit('oldmessage', logdata);
 					}
 				}
+				else {
+					var logdata = {username: "Server",  message: ""}	//Tell client: no more messages
+					socket.emit('oldmessage', logdata);
+				}
 			}
 		});
 	});

@@ -1,7 +1,5 @@
 window.onload = function() {
  
-    var newmessages = [];	// Stack to store all messages to be shown in chat window
-	var oldmessages = [];
 	var html = '';
 	var socket = io.connect();
     var field = document.getElementById("field");	// Get message field
@@ -23,34 +21,32 @@ window.onload = function() {
 	
 	loadButton.onclick = function() {
 		socket.emit('load');
-
     };
 	
 	// Receive messages to be shown in chat window
     socket.on('oldmessage', function (data) {
-        if(data.message) {
+        if(data.message != "") {
 			var temp = '';
 			temp += '<b>' + (data.username ? data.username : 'Server') + ': </b>';
 			temp += data.message + '<br />';
 			html = temp + html;
             content.innerHTML = html;	// Pass html to content div
 			content.scrollTop = content.scrollHeight;	// Enable window scrolling
-        } else {
-            console.log("There is a problem:", data);
+        } 
+		
+		else {
+            alert("No more messages in history!");
+			//console.log (data.message);
         }
     });
 	
 	// Receive messages to be shown in chat window
     socket.on('newmessage', function (data) {
         if(data.message) {
-            //newmessages.push(data);	// Push messages onto stack 
             var temp = '';			// Convert message data to html
-            //for(var i=0; i<newmessages.length; i++) {
             temp += '<b>' + (data.username ? data.username : 'Server') + ': </b>';
             temp += data.message + '<br />';
 			html = html + temp;
-				
-            //}
             content.innerHTML = html;	// Pass html to content div
 			content.scrollTop = content.scrollHeight;	// Enable window scrolling
         } else {
