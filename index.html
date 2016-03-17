@@ -13,15 +13,15 @@
 	<body>
 	    <script src= "/jquery/dist/jquery.min.js"></script>
 		<script type="text/javascript" src="/js/bootstrap.min.js"></script>
-		<div class="div1" id = "content"></div>
+		<div class="rcorners" id = "content"></div>
 		<div class="scrollbar" id="style-1"></div>
 		<div class="controls">
-			<input id = "load" type="submit" class="btn btn-primary.raised.active" value="Load Previous"><br>
-			Name: 
-			<input id="name" style="width:350px;"><br>
-			Message:
-			<input id="field" style="width:350px;">
-			<input id = "send" type="submit" class="btn btn-primary.raised.active" value="Submit">
+			<input id = "load" type="submit" style = "position:relative; left:400px;top:5px;" class="btn btn-primary.raised.active" value="Load Previous"><br>
+			<div class="relative">Name: </div>
+			<input id="name" style="width:350px; position:relative; left:500px; top:0px;"><br>
+			<div class="relative">Message: </div>
+			<input id="field" style="width:350px; position: relative; left:500px;top:0px;">
+			<input id = "send" type="submit" style = "position:relative; left:425px;top:30px;" class="btn btn-primary.raised.active" value="Submit">
 
 		</div>
 	</body>

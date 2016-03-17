@@ -1,9 +1,18 @@
-.div1 {
-    width: 500px; 
-	height: 300px; 
-	margin: 0.5; 
-	border: solid 1px #999; 
+.rcorners {
+    border-radius: 25px;
+    border: 2px solid #73AD21;
+    padding: 20px; 
+    width: 500px;
+    height: 300px;    
+	margin: auto;
 	overflow-y: scroll;
+
+}
+
+.relative {
+	position: relative;
+    left: 400px;
+	top: 20px;
 }
 
 /***********************
@@ -30,6 +39,9 @@
     font-weight: 700;
     letter-spacing: 1px;
     text-transform: uppercase;
+	position: relative;
+    left: 50px;
+    top: 50px;
 }
 .btn:focus, .btn:active:focus, .btn.active:focus {
     outline: 0 none;
@@ -51,45 +63,36 @@
 /***********************
   SCROLLBAR
 ************************/
-
 ::-webkit-scrollbar {
-  width: 2px;
-  height: 2px;
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-button {
-  width: 0px;
-  height: 0px;
+  width: 18px;
+  height: 18px;
 }
 ::-webkit-scrollbar-thumb {
-  background: #e1e1e1;
-  border: 0px none #ffffff;
-  border-radius: 50px;
+  background: #c0c0c0;
+  border: 1px solid #ffffff;
+  border-radius: 100px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #ffffff;
 }
 ::-webkit-scrollbar-thumb:active {
-  background: #000000;
+  background: #ffffff;
 }
 ::-webkit-scrollbar-track {
-  background: #666666;
-  border: 0px none #ffffff;
-  border-radius: 50px;
+  background: #808080;
+  border: 0px solid #ffffff;
+  border-radius: 100px;
 }
 ::-webkit-scrollbar-track:hover {
-  background: #666666;
+  background: #808080;
 }
 ::-webkit-scrollbar-track:active {
-  background: #333333;
+  background: #808080;
 }
-::-webkit-scrollbar-corner {
-  background: transparent;
-}
-}
-::-webkit-scrollbar-thumb:active {
-  background: #000000;
-}
-
 ::-webkit-scrollbar-corner {
   background: transparent;
 }
