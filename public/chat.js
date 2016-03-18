@@ -43,16 +43,16 @@ window.onload = function() {
 	
 	// Receive messages to be shown in chat window
     socket.on('oldmessage', function (data) {
-        if(data.message != "") {
-			var temp = '';
+        if(data.message =="") {
+			alert("No more messages in history!");
+        } 
+		else {
+            var temp = '';
 			temp += '<b>' + (data.username ? data.username : 'Server') + ': </b>';
 			temp += data.message + '<br />';
 			html = temp + html;
             content.innerHTML = html;	// Pass html to content div
 			content.scrollTop = content.scrollHeight;	// Enable window scrolling
-        } 
-		else {
-            alert("No more messages in history!");
         }
     });
 	

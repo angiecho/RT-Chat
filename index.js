@@ -47,6 +47,12 @@ var github = new Github({
 // Execute upon connection with a client
 io.sockets.on('connection', function (socket) {
 	
+	
+	//Load 10 previous messages in history by most recent
+	//chatHead tracks of the top/head of the history shown
+	var chatHead = 0;
+	var loadten = 10;
+	
 	// Retrieve chat logs passed through "docs"
 	chat.find(function(err, docs){
 		if(err) console.log(err);
@@ -54,11 +60,6 @@ io.sockets.on('connection', function (socket) {
 			chatHead = docs.length;
 		}
 	});
-	
-	//Load 10 previous messages in history by most recent
-	//chatHead tracks of the top/head of the history shown
-	var chatHead = 0;
-	var loadten = 10;
 	socket.on('load', function (data) {
 		chat.find(function(err, docs){
 			if(err) console.log(err);
