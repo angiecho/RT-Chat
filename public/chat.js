@@ -62,7 +62,7 @@ window.onload = function() {
             var temp = '';			// Convert message data to html
             temp += '<b>' + (data.username ? data.username : 'Server') + ': </b>';
             temp += data.message + '<br />';
-			html = html + temp;
+			html = html + temp;			// Add on to html stack
             content.innerHTML = html;	// Pass html to content div
 			content.scrollTop = content.scrollHeight;	// Enable window scrolling
         } else {

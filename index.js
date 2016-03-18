@@ -29,7 +29,6 @@ var chatSchema = mongoose.Schema({
 	message: String,
 	created: {type: Date, default: Date.now}
 });
-
 var chat = mongoose.model('messages', chatSchema);
  
 app.get("/", function(req, res){
@@ -40,6 +39,7 @@ app.use(express.static(__dirname + '/public')); // Connect to front-end logic
 
 var io = require('socket.io').listen(server);
 
+// Instantiate Github api 
 var github = new Github({
 	apiUrl: "https://api.github.com"
 });
@@ -47,19 +47,20 @@ var github = new Github({
 // Execute upon connection with a client
 io.sockets.on('connection', function (socket) {
 	
-	
 	//Load 10 previous messages in history by most recent
 	//chatHead tracks of the top/head of the history shown
 	var chatHead = 0;
 	var loadten = 10;
 	
-	// Retrieve chat logs passed through "docs"
+	// Retrieve chat logs
 	chat.find(function(err, docs){
 		if(err) console.log(err);
 		else {
 			chatHead = docs.length;
 		}
 	});
+	
+	//Shift chatHead and chatTail to print 10 older messages
 	socket.on('load', function (data) {
 		chat.find(function(err, docs){
 			if(err) console.log(err);
@@ -105,6 +106,8 @@ io.sockets.on('connection', function (socket) {
 		var command = "/github " + data;
 		var result = "";
 		socket.emit('commandresult',{command:command, result: result});
+		
+		// Search for <arg> in repo name, description, and readme. Sort by most recently updated.
 		var search = github.getSearch(data + "+in%3Aname%2Cdescription%2Creadme&sort=updated&order=desc");
 		search.repositories(null, function (err, repositories) {
 			if (repositories.total_count < maxresult)

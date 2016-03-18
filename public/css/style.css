@@ -1,7 +1,30 @@
+h1 {
+	font-size: 2.5em;
+	color: #73AD21;
+	padding: 5px; 
+	width: 500px;
+	margin: auto;
+	
+}
 h5 {
-    position: relative;
-	left: 400px;
+	padding: 5px; 
+	width: 500px;
+	margin: auto;
+}
+body{
+    overflow-x:hidden;
+}
 
+.controls{
+	width:500px;
+	margin:auto;
+}
+
+.input{
+	width:350px; 
+	position: relative;
+	padding: 5px; 
+	margin: auto;
 }
 
 .rcorners {
@@ -12,13 +35,12 @@ h5 {
     height: 300px;    
 	margin: auto;
 	overflow-y: scroll;
-
 }
 
 .relative {
 	position: relative;
-    left: 400px;
-	top: 20px;
+	margin: auto;
+	margin-top: 3px;
 }
 
 /***********************
@@ -43,26 +65,32 @@ h5 {
     border: 0 none;
 	font-size: 12px;
     font-weight: 700;
+	color: #73AD21;
     letter-spacing: 1px;
     text-transform: uppercase;
 	position: relative;
-    left: 50px;
-    top: 50px;
+	margin: auto;
+	margin-top: 5px;
+	
 }
 .btn:focus, .btn:active:focus, .btn.active:focus {
     outline: 0 none;
+	color: #73AD21;
 }
 
 .btn-primary {
     background: #0099cc;
-    color: #ffffff;
+    color: #73AD21;
+
 }
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
     background: #33a6cc;
+	color: #ffffff;
 }
 .btn-primary:active, .btn-primary.active {
     background: #007299;
     box-shadow: none;
+	color: #ffffff;
 }
 
 
