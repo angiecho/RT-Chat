@@ -15,13 +15,13 @@ window.onload = function() {
 		var user = name.value;
 		var input = field.value;
 		
-		if (input[0] == '/' && input.length > 1){
+		if ((input[0] == '/' || input[0]=='\\') && input.length > 1){
 			var cmd = input.match(/[a-z]+\b/)[0];
 			var arg = input.substr(cmd.length+2, input.length);
 			field.value = '';
 			command(cmd, arg);
 		}
-		else if (input[0] == '/' && input.length == 1){
+		else if ((input[0] == '/' || input[0] == '\\') && input.length == 1){
 			html = html + "<b>/github 'term' : </b>search for github repos related to 'term' and return 5 most recently updated<br />";
 			content.innerHTML = html;	// Pass html to content div
 			content.scrollTop = content.scrollHeight;	// Enable window scrolling
