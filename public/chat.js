@@ -43,7 +43,7 @@ window.onload = function() {
 	
 	// Receive messages to be shown in chat window
     socket.on('oldmessage', function (data) {
-        if(data.message =="") {
+        if(data.username === "Server") {
 			alert("No more messages in history!");
         } 
 		else {
